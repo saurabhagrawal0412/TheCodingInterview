@@ -9,6 +9,7 @@ public class Intersection_Test {
 
 class IntersectionFinder {
 	static Point findIntersection(Line line1, Line line2) {
+		
 		return null ;
 	}
 }
@@ -16,6 +17,20 @@ class IntersectionFinder {
 class Line {
 	Point a ;
 	Point b ;
+	
+	double cof_a, cof_b, cof_c ;
+
+	public Line(Point a, Point b) {
+		this.a = a;
+		this.b = b;
+		findEquation() ;
+	}
+
+	private void findEquation() {
+		cof_a = b.y - a.y ;
+		cof_b = a.x - b.x ;
+		cof_c = b.x*a.y - a.y*b.x ;
+	}
 }
 
 class Point {
