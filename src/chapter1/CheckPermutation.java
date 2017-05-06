@@ -1,46 +1,42 @@
 package chapter1;
 
-public class CheckPermutation
-{
+/*
+ * Author: Saurabh Agrawal
+ * This program checks whether two given strings are permutations of each other or not
+ * It takes constant space and linear time (proportional to the total size of both the strings)
+ * */
 
-	public static void main(String[] args)
-	{
-		String input1 = "abbadc" ;
-		String input2 = "bacdbad" ;
-		boolean isPermutation = true ;
-		char[] i1 , i2 ;
-		i1 = input1.toCharArray() ;
-		i2 = input2.toCharArray() ;
+public class CheckPermutation {
+
+	public static void main(String[] args) {
+		CheckPermutation obj = new CheckPermutation() ;
 		
-		int[] chars = new int[256] ;
-		for(char temp : i1)
-			chars[((int)temp) -1] += 1 ;
+		System.out.println( obj.isPermutation("banner", "benran") );
+		System.out.println( obj.isPermutation("apple", "papel") );
+		System.out.println( obj.isPermutation("apple", "lapel") );
+	}
+
+	private boolean isPermutation(final String word1, final String word2) {
+		if(word1.length() != word2.length()) {
+			return false ;
+		}
 		
-		int t1 ;
-		for(char temp : i2)
-		{
-			t1 = ((int)temp) -1 ;
-			chars[t1] -= 1 ;
-			if(chars[t1] == -1)
-			{
-				isPermutation = false ;
-				break ;
+		byte[] charFrequency = new byte[256] ;
+		
+		for(int i=0 ; i<word1.length() ; i++) {
+			charFrequency[(int)word1.charAt(i)] ++ ;
+			charFrequency[(int)word2.charAt(i)] -- ;
+		}
+		
+		return isZeroArray(charFrequency) ;
+	}
+
+	private boolean isZeroArray(final byte[] charFrequency) {
+		for(byte curr : charFrequency) {
+			if(curr != 0) {
+				return false ;
 			}
 		}
-		
-		if(isPermutation == false)
-			System.out.println("Not a permutation") ;
-		else
-			System.out.println("A permutation") ;
+		return true ;
 	}
-	
-	private void displayChars(int[] chars)
-	{
-		for(int i=0 ; i<chars.length ; i++)
-		{
-			if(chars[i] > 0)
-				System.out.println((char)(i+1) + " " + chars[i] ) ;
-		}
-	}
-
 }

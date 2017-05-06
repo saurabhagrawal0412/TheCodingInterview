@@ -1,98 +1,37 @@
 package chapter1;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.util.Stack;
 
-public class PalindromePermutation
-{
+/* Author: Saurabh Agrawal
+ * This program checks if the given string is a palindrome or not
+ * It uses stack to find it*/
 
-	public static void main(String[] args)
-	{
-		PalindromePermutation pp = new PalindromePermutation() ;
-		pp.checkPalindrome("Tactcat") ;
+public class PalindromePermutation {
+	public static void main(String[] args) {
+		PalindromePermutation obj = new PalindromePermutation() ;
+		System.out.println(obj.isPermutation("malayalam")) ;
+		System.out.println(obj.isPermutation("faaf")) ;
+		System.out.println(obj.isPermutation("apple")) ;
 	}
-
-	private void checkPalindrome(String input)
-	{
-		int[] chars = new int[26] ;
-		ArrayList<Integer> spaces = new ArrayList<Integer>() ;
-		
-		int t ;
-		char c ;
-		for(int i=0 ; i<input.length() ; i++)
-		{
-			c = input.charAt(i) ;
-			if(c == ' ')
-				spaces.add(i) ;
-			else
-			{
-				t = (int) Character.toLowerCase(c) ;
-				chars[t-97] += 1 ;
-			}
-		}
-		
-		char t3 ;
-		for(int t2=0 ; t2<chars.length ; t2++)
-		{
-			t3 = (char)(t2+97) ;
-			System.out.println(t3 + " " + chars[t2]) ;
-		}
-		
-		int odds = 0 ;
-		boolean isPalindrome = true ;
-		for(int t4=0 ; t4<chars.length ; t4++)
-		{
-			if(chars[t4]%2 != 0)
-			{
-				odds++ ;
-			}
-			if(odds >= 2)
-			{
-				System.out.println("Odds out") ;
-				isPalindrome = false ;
-				break ;
-			}
-		}
-		if(isPalindrome == false)
-		{
-			System.out.println("Palindrome not working") ;
-			return ;
-		}
-		else
-		{
-			System.out.println("Working is Palindrome") ;
-		}
-		
-		//Making palindromes
-		ArrayList<Coordinates> coordinates = new ArrayList<Coordinates>() ;
-		char t5 ;
-		for(int i=0 ; i<chars.length ; i++)
-		{
-			if(chars[i] > 0)
-			{
-				t5 = (char)(i+97) ;
-				coordinates.add(new Coordinates(t5, chars[i])) ;
-			}
-		}
-		
-		for(Coordinates c3 : coordinates)
-		{
-			System.out.println(c3.c + " " + c3.count) ;
-		}
-		
-		
-	}
-
-}
-
-class Coordinates
-{
-	public char c ;
-	public int count ;
 	
-	public Coordinates(char c , int count)
-	{
-		this.c = c ;
-		this.count = count ;
+	private boolean isPermutation(final String word) {
+		int length = word.length() ;
+		int pushIndex = length/2 - 1 ;
+		int popIndex = (length%2 == 1) ? (pushIndex + 2) : (pushIndex + 1) ;
+		
+		Stack<Character> permutStack = new Stack<>() ;
+		
+		for(int i=0 ; i<length ; i++) {
+			char curr = word.charAt(i) ;
+			if(i <= pushIndex) {
+				permutStack.push(curr) ;
+			}
+			else if(i >= popIndex) {
+				if(permutStack.pop() != curr) {
+					return false ;
+				}
+			}
+		}
+		return true ;
 	}
 }
